@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DTS:Executable DTS:CreationDate="10/15/2018 10:51:47" DTS:CreationName="Microsoft.Package" DTS:CreatorComputerName="DT121" DTS:CreatorName="pnorman" DTS:DTSID="{4C792DBE-354E-4A9C-8C72-A2A4F5F8DCDC}" DTS:ExecutableType="Microsoft.Package" DTS:LastModifiedProductVersion="" DTS:LocaleID="1033" DTS:ObjectName="Staging" DTS:ProtectionLevel="0" DTS:refId="Package" DTS:VersionBuild="0" DTS:VersionGUID="{BEFCD40C-B8A2-46FF-849A-4F7953901E3B}" DTS:VersionMajor="0" xmlns:DTS="www.microsoft.com/SqlServer/Dts">
+  <DTS:Property DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager DTS:CreationName="OLEDB" DTS:DTSID="{40BBB271-3DD8-40A0-83D6-935D6BFD95D8}" DTS:ObjectName="OLEB_Staging" DTS:refId="Package.ConnectionManagers[OLEB_Staging]">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager DTS:ConnectionString="data source=DT121;initial catalog=RptgProd;provider=SQLOLEDB.1;integrated security=SSPI;auto translate=False" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Executables>
+    <DTS:Executable DTS:CreationName="Microsoft.ExecuteSQLTask" DTS:DTSID="{2EB162B8-C394-4CDA-9DF7-9D2FB9A7E7CA}" DTS:ExecutableType="Microsoft.ExecuteSQLTask" DTS:LocaleID="-1" DTS:ObjectName="SQL - Execute SQL Query" DTS:refId="Package\SQL - Execute SQL Query" DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData SQLTask:Connection="OLEB_Staging" SQLTask:SqlStatementSource="&#xA;              Select top 10 * from sys.tables                &#xA;          " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+</DTS:Executable>

@@ -1,0 +1,18 @@
+﻿<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+   <Connections >
+    <Connection Name ="OLEB_Staging"
+                ConnectionString="Data Source=DT121;Initial Catalog=RptgProd;
+                   Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;"/>
+  </Connections>
+  <Packages>
+    <Package Name="Staging" ConstraintMode="Linear">
+      <Tasks>
+       <ExecuteSQL Name="SQL - Execute SQL Query" ConnectionName="OLEB_Staging">
+          <DirectInput>
+              Select top 10 * from sys.tables                
+          </DirectInput>
+       </ExecuteSQL>
+      </Tasks>        
+    </Package>
+  </Packages>
+</Biml>

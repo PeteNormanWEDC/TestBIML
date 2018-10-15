@@ -1,0 +1,90 @@
+﻿<Biml xmlns="http://schemas.varigence.com/biml.xsd">
+    <Connections>
+        <Connection Name="ImportedProjectConnection1" CreateInProject="true" ConnectionString="" />
+    </Connections>
+    <Packages>
+        <Package Name="SFDC to AG01" Language="None" ConstraintMode="LinearOnSuccess" SsisPackageType="5" VersionBuild="11" CreatorName="CORP\pnorman" CreatorComputerName="DT121" CreationDate="2018-10-05T08:44:19">
+            <Variables>
+                <Variable Name="dt1" DataType="DateTime" IncludeInDebugDump="Exclude" EvaluateAsExpression="true">DateAdd(&quot;day&quot;, @[User::intLookbackDays], @[User::dtStartTime])</Variable>
+                <Variable Name="dt2" DataType="DateTime" IncludeInDebugDump="Exclude" EvaluateAsExpression="true">DateAdd(&quot;day&quot;, 1, @[User::dtStartTime])</Variable>
+                <Variable Name="dtStartTime" DataType="DateTime" IncludeInDebugDump="Exclude" EvaluateAsExpression="true">GETDATE()</Variable>
+                <Variable Name="fmtDt1" DataType="String" IncludeInDebugDump="Exclude" EvaluateAsExpression="true">&quot;&apos;&quot; + (DT_STR,4,1252)DATEPART( &quot;yyyy&quot; , @[User::dt1] ) + &quot;-&quot; + 
+
+RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;mm&quot; , @[User::dt1]   ), 2) + &quot;-&quot; + 
+
+RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;dd&quot; , @[User::dt1]   ), 2) + &quot; &quot; + 
+RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;hh&quot; , @[User::dt1]   ), 2) + &quot;:&quot; + 
+RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;MM&quot; , @[User::dt1]   ), 2) + 
+&quot;&apos;&quot;</Variable>
+                <Variable Name="fmtDt2" DataType="String" IncludeInDebugDump="Exclude" EvaluateAsExpression="true">&quot;&apos;&quot; + (DT_STR,4,1252)DATEPART( &quot;yyyy&quot; , @[User::dt2] ) + &quot;-&quot; + 
+
+RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;mm&quot; , @[User::dt2]   ), 2) + &quot;-&quot; + 
+
+RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;dd&quot; , @[User::dt2]   ), 2) + &quot; &quot; +
+RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;hh&quot; , @[User::dt2]   ), 2) + &quot;:&quot; + 
+RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;MM&quot; , @[User::dt2]   ), 2) + 
+&quot;&apos;&quot;</Variable>
+                <Variable Name="intLookbackDays" DataType="Int32" IncludeInDebugDump="Exclude" EvaluateAsExpression="true">@[$Package::pLookbackDays] * -1</Variable>
+                <Variable Name="intLookbackHours" DataType="Int32" IncludeInDebugDump="Exclude" EvaluateAsExpression="true">NULL(DT_I4)</Variable>
+                <Variable Name="objTableList" DataType="Object" IncludeInDebugDump="Include" />
+            </Variables>
+            <Tasks>
+                <ExecuteSQL Name="get Active Integration Tables" ConnectionName="ImportedProjectConnection1" ResultSet="Full">
+                    <Results>
+                        <Result Name="0" VariableName="User.objTableList" />
+                    </Results>
+                    <DirectInput>SELECT * FROM vAdmin_ActiveIntegrationTables</DirectInput>
+                </ExecuteSQL>
+                <ForEachAdoLoop Name="Foreach Integration Table" ConstraintMode="LinearOnSuccess" SourceVariableName="User.objTableList">
+                    <Variables>
+                        <Variable Name="strDataTableName" DataType="String" IncludeInDebugDump="Exclude">Account</Variable>
+                        <Variable Name="strLoadTableName" DataType="String" IncludeInDebugDump="Exclude">Account_Load</Variable>
+                        <Variable Name="strSObjectName" DataType="String" IncludeInDebugDump="Exclude">Account</Variable>
+                    </Variables>
+                    <Tasks>
+                        <ExecutePackage Name="Truncate Load">
+                            <ParameterBindings>
+                                <ParameterBinding Name="pSObjectName" VariableName="User.strSObjectName" />
+                            </ParameterBindings>
+                            <ExternalProjectPackage Package="SFDC to AG01 - truncate Load table.dtsx" />
+                        </ExecutePackage>
+                        <ExecutePackage Name="Get SFDC Updates">
+                            <Expressions>
+                                <Expression ExternalProperty="PackageName">&quot;SFDC to AG01 updates - &quot; + @[User::strSObjectName] + &quot;.dtsx&quot;</Expression>
+                            </Expressions>
+                            <ParameterBindings>
+                                <ParameterBinding Name="pfmtDt1" VariableName="User.fmtDt1" />
+                                <ParameterBinding Name="pfmtDt2" VariableName="User.fmtDt2" />
+                            </ParameterBindings>
+                            <ExternalProjectPackage Package="SFDC to AG01 updates - Account.dtsx" />
+                        </ExecutePackage>
+                        <ExecutePackage Name="Get SFDC Deletes">
+                            <ParameterBindings>
+                                <ParameterBinding Name="pfmtDt1" VariableName="User.fmtDt1" />
+                                <ParameterBinding Name="pfmtDt2" VariableName="User.fmtDt2" />
+                                <ParameterBinding Name="pSObjectName" VariableName="User.strSObjectName" />
+                            </ParameterBindings>
+                            <ExternalProjectPackage Package="SFDC to AG01 - get deletes.dtsx" />
+                        </ExecutePackage>
+                        <ExecutePackage Name="Apply to local">
+                            <ParameterBindings>
+                                <ParameterBinding Name="pLookbackDays" VariableName="User.intLookbackDays" />
+                                <ParameterBinding Name="pLookbackHours" VariableName="User.intLookbackHours" />
+                                <ParameterBinding Name="pSObjectName" VariableName="User.strSObjectName" />
+                            </ParameterBindings>
+                            <ExternalProjectPackage Package="SFDC to AG01 - update local table.dtsx" />
+                        </ExecutePackage>
+                    </Tasks>
+                    <VariableMappings>
+                        <VariableMapping Name="0" VariableName="User.strSObjectName" />
+                        <VariableMapping Name="1" VariableName="User.strLoadTableName" />
+                        <VariableMapping Name="2" VariableName="User.strDataTableName" />
+                    </VariableMappings>
+                </ForEachAdoLoop>
+            </Tasks>
+            <Parameters>
+                <Parameter Name="pLookbackDays" DataType="Int32" IsRequired="true">5</Parameter>
+            </Parameters>
+        </Package>
+    </Packages>
+</Biml>

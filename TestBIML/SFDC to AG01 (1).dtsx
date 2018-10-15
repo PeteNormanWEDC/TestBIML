@@ -1,0 +1,495 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/5/2018 8:44:19 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DT121"
+  DTS:CreatorName="CORP\pnorman"
+  DTS:DTSID="{419AC804-D372-45BC-A6C0-32D44F5EE489}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.107"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="SFDC to AG01"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{A3A2EDF5-961D-4425-9824-6AE80356E185}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{2DF411C7-9D5D-455D-B9A4-1F062251B0AD}"
+      DTS:ObjectName="pLookbackDays"
+      DTS:Required="True">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">5</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8CF72232-0AAA-483E-838F-6235BD56D74F}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="DateAdd(&quot;day&quot;, @[User::intLookbackDays], @[User::dtStartTime])"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dt1">
+      <DTS:VariableValue
+        DTS:DataType="7">10/10/2018 11:08:08 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3CCA6965-4D77-4690-8AF5-A2F002FA9279}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="DateAdd(&quot;day&quot;, 1, @[User::dtStartTime])"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dt2">
+      <DTS:VariableValue
+        DTS:DataType="7">10/16/2018 11:08:08 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FED630ED-B6CD-4D7B-9837-147F6DCAF838}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="GETDATE()"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dtStartTime">
+      <DTS:VariableValue
+        DTS:DataType="7">10/15/2018 11:08:08 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{93B72F8B-5781-4B2B-B047-3C87AEB8084F}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;'&quot; + (DT_STR,4,1252)DATEPART( &quot;yyyy&quot; , @[User::dt1] ) + &quot;-&quot; + &#xA;&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;mm&quot; , @[User::dt1]   ), 2) + &quot;-&quot; + &#xA;&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;dd&quot; , @[User::dt1]   ), 2) + &quot; &quot; + &#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;hh&quot; , @[User::dt1]   ), 2) + &quot;:&quot; + &#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;MM&quot; , @[User::dt1]   ), 2) + &#xA;&quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="fmtDt1">
+      <DTS:VariableValue
+        DTS:DataType="8">'2018-10-10 11:10'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1FAC8284-F98B-4516-80B1-6178CE1CE7A8}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;'&quot; + (DT_STR,4,1252)DATEPART( &quot;yyyy&quot; , @[User::dt2] ) + &quot;-&quot; + &#xA;&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;mm&quot; , @[User::dt2]   ), 2) + &quot;-&quot; + &#xA;&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;dd&quot; , @[User::dt2]   ), 2) + &quot; &quot; +&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;hh&quot; , @[User::dt2]   ), 2) + &quot;:&quot; + &#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;MM&quot; , @[User::dt2]   ), 2) + &#xA;&quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="fmtDt2">
+      <DTS:VariableValue
+        DTS:DataType="8">'2018-10-16 11:10'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7BF82A7B-8D70-467C-A659-621DCD43977B}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::pLookbackDays] * -1"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="intLookbackDays">
+      <DTS:VariableValue
+        DTS:DataType="3">-5</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DFF3EBAB-8859-4A5C-94B3-4CC571D8C6F1}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="NULL(DT_I4)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="intLookbackHours">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{84E7FE99-D657-4429-B62D-F163B72EA3F8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="objTableList">
+      <DTS:VariableValue
+        DTS:DataSubType="ManagedSerializable"
+        DTS:DataType="13">
+        <SOAP-ENV:Envelope xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+          <SOAP-ENV:Body>
+            <xsd:anyType
+              id="ref-1"></xsd:anyType>
+          </SOAP-ENV:Body>
+        </SOAP-ENV:Envelope>
+      </DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Foreach Integration Table"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{EA895EE4-3B2A-4BDC-A523-6AF4FB5B99A0}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Foreach Integration Table">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachADOEnumerator"
+        DTS:DTSID="{699ED812-4B92-4C24-968F-2839375EF248}"
+        DTS:ObjectName="{699ED812-4B92-4C24-968F-2839375EF248}">
+        <DTS:ObjectData>
+          <FEEADO
+            EnumType="EnumerateRowsInFirstTable"
+            VarName="User::objTableList" />
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{B36D4CAB-6079-46BC-853F-92A2DA8E0B0E}"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="strDataTableName">
+          <DTS:VariableValue
+            DTS:DataType="8">Account</DTS:VariableValue>
+        </DTS:Variable>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{75554248-1DDD-4234-B887-4D031FD205A2}"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="strLoadTableName">
+          <DTS:VariableValue
+            DTS:DataType="8">Account_Load</DTS:VariableValue>
+        </DTS:Variable>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:DTSID="{7114BFEF-1D98-42C4-ADCA-2B20F4E786C3}"
+          DTS:IncludeInDebugDump="2345"
+          DTS:Namespace="User"
+          DTS:ObjectName="strSObjectName">
+          <DTS:VariableValue
+            DTS:DataType="8">Account</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Integration Table\Apply to local"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Apply SFDC to local table"
+          DTS:DTSID="{42A07DE5-057A-4669-8A33-15A1C73C90AC}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Apply to local"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>SFDC to AG01 - update local table.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>pLookbackDays</ParameterName>
+                <BindedVariableOrParameterName>User::intLookbackDays</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>pLookbackHours</ParameterName>
+                <BindedVariableOrParameterName>User::intLookbackHours</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>pSObjectName</ParameterName>
+                <BindedVariableOrParameterName>User::strSObjectName</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Integration Table\Get SFDC Deletes"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Get recent deletes"
+          DTS:DTSID="{67410238-64AB-4E8C-9B2B-F7D93ADCA87D}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Get SFDC Deletes"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>SFDC to AG01 - get deletes.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>pfmtDt1</ParameterName>
+                <BindedVariableOrParameterName>User::fmtDt1</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>pfmtDt2</ParameterName>
+                <BindedVariableOrParameterName>User::fmtDt2</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>pSObjectName</ParameterName>
+                <BindedVariableOrParameterName>User::strSObjectName</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Integration Table\Get SFDC Updates"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{567D5EF6-BC48-41ED-A90C-E291275CA7C2}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Get SFDC Updates"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="PackageName">"SFDC to AG01 updates - " + @[User::strSObjectName] + ".dtsx"</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>SFDC to AG01 updates - Account.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>pfmtDt1</ParameterName>
+                <BindedVariableOrParameterName>User::fmtDt1</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>pfmtDt2</ParameterName>
+                <BindedVariableOrParameterName>User::fmtDt2</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Foreach Integration Table\Truncate Load"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Truncate the load table"
+          DTS:DTSID="{C3D92DFC-365B-4CBE-A1CB-DCE554EBD661}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate Load"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>SFDC to AG01 - truncate Load table.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>pSObjectName</ParameterName>
+                <BindedVariableOrParameterName>User::strSObjectName</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Foreach Integration Table.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{283DB330-2C77-457E-BAC8-5A74F98633D0}"
+          DTS:From="Package\Foreach Integration Table\Truncate Load"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Foreach Integration Table\Get SFDC Updates" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Foreach Integration Table.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{304DD913-2C1C-4ED1-97DA-CC0F1967EBE7}"
+          DTS:From="Package\Foreach Integration Table\Get SFDC Updates"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Foreach Integration Table\Get SFDC Deletes" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Foreach Integration Table.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{6D79397E-EF32-4871-89E9-B866EE1D21BD}"
+          DTS:From="Package\Foreach Integration Table\Get SFDC Deletes"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Foreach Integration Table\Apply to local" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{01508305-BBBA-4AD9-80E2-C556C308438A}"
+          DTS:ObjectName="{01508305-BBBA-4AD9-80E2-C556C308438A}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::strSObjectName" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{6567C485-3A5C-4AA5-B2BA-B5F3CBF9A38F}"
+          DTS:ObjectName="{6567C485-3A5C-4AA5-B2BA-B5F3CBF9A38F}"
+          DTS:ValueIndex="1"
+          DTS:VariableName="User::strLoadTableName" />
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{8F7E50C2-4973-4F1C-B9EA-6F6EBB09EE8F}"
+          DTS:ObjectName="{8F7E50C2-4973-4F1C-B9EA-6F6EBB09EE8F}"
+          DTS:ValueIndex="2"
+          DTS:VariableName="User::strDataTableName" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\get Active Integration Tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{83D58D17-B97A-435C-9B2E-FAA79E19AC12}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="get Active Integration Tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1791CD6C-D16A-49C7-BBA6-879C9684C935}"
+          SQLTask:SqlStatementSource="SELECT * FROM vAdmin_ActiveIntegrationTables"
+          SQLTask:ResultType="ResultSetType_Rowset" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::objTableList" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6E73FA73-F6F2-493E-AE3F-B041DF9B80BF}"
+      DTS:From="Package\get Active Integration Tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Foreach Integration Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="191,42"
+          Id="Package\Foreach Integration Table\Apply to local"
+          TopLeft="42,263" />
+        <NodeLayout
+          Size="191,42"
+          Id="Package\Foreach Integration Table\Get SFDC Deletes"
+          TopLeft="41,184" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Foreach Integration Table\Get SFDC Updates"
+          TopLeft="51,98.6666666666667" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Foreach Integration Table\Truncate Load"
+          TopLeft="58,19" />
+        <EdgeLayout
+          Id="Package\Foreach Integration Table.PrecedenceConstraints[Constraint]"
+          TopLeft="135.25,61">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37.6666666666667"
+              Start="0,0"
+              End="0,30.1666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.1666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Integration Table.PrecedenceConstraints[Constraint 1]"
+          TopLeft="137,140.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.3333333333333"
+              Start="0,0"
+              End="0,35.8333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.8333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Foreach Integration Table.PrecedenceConstraints[Constraint 2]"
+          TopLeft="137,226">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="289,360"
+          Size="289,403"
+          Id="Package\Foreach Integration Table"
+          TopLeft="64,147" />
+        <NodeLayout
+          Size="218,42"
+          Id="Package\get Active Integration Tables"
+          TopLeft="100,62" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="208.75,104">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
